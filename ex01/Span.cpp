@@ -4,44 +4,51 @@
 Span::Span(unsigned int n) : _max(n)
 {
 	_filled = 0;
-	std::cout << "\e[0;33mDefault Constructor called of Span\e[0m" << std::endl;
 }
 
 Span::Span(const Span &copy)
 {
-	(void) copy;
-	std::cout << "\e[0;33mCopy Constructor called of Span\e[0m" << std::endl;
+	_max = copy._max;
+	_filled = copy._filled;
+	_v.assign(copy._v.begin(), copy._v.end());
 }
 
 
 // Destructor
 Span::~Span()
 {
-	std::cout << "\e[0;31mDestructor called of Span\e[0m" << std::endl;
 }
 
 
 // Operators
 Span & Span::operator=(const Span &assign)
 {
-	(void) assign;
+	_max = assign._max;
+	_filled = assign._filled;
+	_v.assign(assign._v.begin(), assign._v.end());
 	return *this;
 }
 
 void Span::addNumber(int n)
 {
-	if (_v.size() < _max)
+	if ((int)_v.size() < _max)
 		_v.push_back(n);
 	else
 		throw MaxLenException();
 }
 
-int	Span::shortestSpan( void ) const
+int	Span::shortestSpan( void )
 {
-	std::cout << "Bork!"  + _type << std::endl;
+	if ((int)_v.size() < 2)
+		throw ArrayTooSmallException();
+	std::sort(_v.begin(), _v.end());
+	return (_v[1] - _v[0]);
 }
 
-int	Span::longestSpan( void ) const
+int	Span::longestSpan( void )
 {
-	std::cout << "Bork!"  + _type << std::endl;
+	if ((int)_v.size() < 2)
+		throw ArrayTooSmallException();
+	std::sort(_v.begin(), _v.end());
+	return ( _v.back() - _v.front());
 }

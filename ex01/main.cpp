@@ -1,53 +1,68 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include "easyfind.hpp"
+#include "Span.hpp"
 #include <array>
+#include <cstdlib>
+#include <random>
 
 int main(void)
 {
     {
-        std::vector<int> va(5, 100);
-        va[2] = 9;
+        Span sp(5);
 
-        easyfind(va, 9);
-    }
-    {
-        std::vector<int> va(5, 100);
-        va[2] = 9;
+        sp.addNumber(1);
+        sp.addNumber(4);
+        sp.addNumber(3);
+        sp.addNumber(2);
+        sp.addNumber(5);
 
         try {
-            easyfind(va, 5);
+            sp.addNumber(6);
         }
         catch (std::exception &e) {
             std::cout << e.what() << std::endl;
         }
     }
     {
-        std::array<int, 5> arr;
+        Span sp(1);
 
-        arr[0] = 1;
-        arr[1] = 2;
-        arr[2] = 3;
-        arr[3] = 4;
-        arr[4] = 5;
-        easyfind(arr, 3);
-    }
-    {
-        std::array<int, 5> arr;
+        sp.addNumber(1);
 
-        arr[0] = 1;
-        arr[1] = 2;
-        arr[2] = 3;
-        arr[3] = 4;
-        arr[4] = 5;
         try {
-            easyfind(arr, 6);
+            std::cout << sp.shortestSpan() << std::endl;
+        }
+        catch (std::exception &e) {
+            std::cout << e.what() << std::endl;
+        }
+        try {
+            std::cout << sp.longestSpan() << std::endl;
         }
         catch (std::exception &e) {
             std::cout << e.what() << std::endl;
         }
     }
+    {
+        Span sp(100000);
+        std::random_device rd;  // Create a random device
+        std::mt19937 gen(rd());  // Use the random device to seed a Mersenne Twister generator
+        std::uniform_int_distribution<> dis(INT_MIN, INT_MAX);
+        std::cout << "Generating 100 000 random numbers" << std::endl;
+        for (int x = 0; x < 100000; x++)
+            sp.addNumber(dis(gen));
 
+        try {
+            std::cout << "Shortest Span: " << sp.shortestSpan() << std::endl;
+        }
+        catch (std::exception &e) {
+            std::cout << e.what() << std::endl;
+        }
+        try {
+            std::cout << "Longest Span: " << sp.longestSpan() << std::endl;
+        }
+        catch (std::exception &e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
     return 0;
 }
