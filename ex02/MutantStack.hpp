@@ -6,8 +6,8 @@
 #include <stack>
 #include <iterator>
 
-template <typename T, typename container=std::deque<T> >
-class MutantStack : public std::stack<T>
+template <typename T>
+class MutantStack : public std::stack<T, std::deque<T> >
 {
     public:
         MutantStack(){}
@@ -16,7 +16,7 @@ class MutantStack : public std::stack<T>
         {
             *this = stack;
         }
-        typedef typename container::iterator iterator;
+        typedef typename std::deque<T>::iterator iterator;
         iterator begin()
         {
             return this->c.begin();
