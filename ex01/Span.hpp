@@ -20,6 +20,8 @@ class Span
 		int	shortestSpan( void );
 		int	longestSpan( void );
 		void addNumber ( int n );
+		void fill(int n, int count);
+
 
 		class MaxLenException : public std::exception {
 			public:

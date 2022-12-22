@@ -1,4 +1,6 @@
 #include "Span.hpp"
+#include <vector>
+#include <numeric>
 
 // Constructors
 Span::Span(unsigned int n) : _max(n)
@@ -35,20 +37,43 @@ void Span::addNumber(int n)
 		_v.push_back(n);
 	else
 		throw MaxLenException();
+	_filled++;
 }
 
 int	Span::shortestSpan( void )
 {
-	if ((int)_v.size() < 2)
+	int minDiff = INT_MAX;
+	int diff;
+
+	if ((int)_v.size() < 2 || _filled < 2)
 		throw ArrayTooSmallException();
 	std::sort(_v.begin(), _v.end());
-	return (_v[1] - _v[0]);
+	for (int i = 1; i < (int)_v.size(); i++) {
+		diff = _v[i] - _v[i - 1];
+		if (diff < minDiff)
+			minDiff = diff;
+	}
+	return (minDiff);
 }
 
 int	Span::longestSpan( void )
 {
-	if ((int)_v.size() < 2)
+	if ((int)_v.size() < 2 || _filled < 2)
 		throw ArrayTooSmallException();
 	std::sort(_v.begin(), _v.end());
-	return ( _v.back() - _v.front());
+	
+	return (*std::max_element(_v.begin(), _v.end()) - *std::min_element(_v.begin(), _v.end()));
+}
+
+void Span::fill(int n, int count)
+{
+	if (count > _max)
+		throw MaxLenException();
+	std::fill(_v.begin(), _v.begin() + count, n);
+	for (int i = 0; i != (int)_v.size(); i++) {
+		std::cout << _v[i] << " ";
+	}
+	std::cout << std::endl;
+	if (count > _filled)
+		_filled = count;
 }
