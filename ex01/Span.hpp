@@ -9,6 +9,7 @@ class Span
 {
 	public:
 		// Constructors
+		Span();
 		Span(unsigned int n);
 		Span(const Span &copy);
 		
@@ -20,7 +21,21 @@ class Span
 		int	shortestSpan( void );
 		int	longestSpan( void );
 		void addNumber ( int n );
-		void fill(int n, int count);
+		template <typename Iter>
+		void fill(Iter begin, Iter end)
+		{
+			if (end - begin > _max)
+				throw MaxLenException();
+			_v.assign(begin, end);
+			if (end - begin > _filled)
+				_filled = end - begin;
+			for (int i = 0; i != (int)_v.size(); i++) {
+				std::cout << _v[i] << " ";
+			}
+			std::cout << std::endl;
+			
+		}
+
 
 
 		class MaxLenException : public std::exception {

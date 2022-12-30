@@ -2,6 +2,7 @@
 # define EASYFIND_HPP
 # include <iostream>
 # include <vector>
+# include <algorithm>
 
 class NoSuchElementException : public std::exception
 {

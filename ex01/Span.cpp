@@ -3,6 +3,11 @@
 #include <numeric>
 
 // Constructors
+Span::Span() : _max(0)
+{
+	_filled = 0;
+}
+
 Span::Span(unsigned int n) : _max(n)
 {
 	_filled = 0;
@@ -60,20 +65,9 @@ int	Span::longestSpan( void )
 {
 	if ((int)_v.size() < 2 || _filled < 2)
 		throw ArrayTooSmallException();
-	std::sort(_v.begin(), _v.end());
-	
-	return (*std::max_element(_v.begin(), _v.end()) - *std::min_element(_v.begin(), _v.end()));
-}
+	double mn, mx;
 
-void Span::fill(int n, int count)
-{
-	if (count > _max)
-		throw MaxLenException();
-	std::fill(_v.begin(), _v.begin() + count, n);
-	for (int i = 0; i != (int)_v.size(); i++) {
-		std::cout << _v[i] << " ";
-	}
-	std::cout << std::endl;
-	if (count > _filled)
-		_filled = count;
+	mn =*std::min_element(_v.begin(), _v.end());
+	mx = *std::max_element(_v.begin(), _v.end());
+	return mx - mn;
 }
